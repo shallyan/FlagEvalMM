@@ -63,7 +63,11 @@ class ModelAdapter(BaseModelAdapter):
     def launch_model(self, task_info: Dict):
         port = get_random_port()
         # replace port in url
-        url = re.sub(r":(\d+)/", f":{port}/", task_info.get("url", "http://localhost:8000/v1/chat/completions"))
+        url = re.sub(
+            r":(\d+)/",
+            f":{port}/",
+            task_info.get("url", "http://localhost:8000/v1/chat/completions"),
+        )
         task_info["url"] = url
 
         model_name = task_info["model_name"]

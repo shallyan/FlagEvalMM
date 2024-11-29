@@ -9,6 +9,8 @@ import logging
 import multiprocessing
 import time
 
+multiprocessing.set_start_method("spawn", force=True)
+
 logger = get_logger(__name__)
 
 
@@ -19,11 +21,13 @@ class EvaluationServer:
         model_path: str,
         output_dir: str,
         port: int = 5000,
+        host: str = "127.0.0.1",
         debug: bool = True,
         quiet: bool = False,
     ) -> None:
         self.debug = debug
         self.port = port
+        self.host = host
         self.config_dict = config_dict
         self.model_path = model_path
         self.output_dir = output_dir
@@ -176,7 +180,7 @@ class EvaluationServer:
             return jsonify({"status": FINISHED})
 
     def run(self) -> None:
-        self.app.run(debug=self.debug, port=self.port)
+        self.app.run(debug=self.debug, port=self.port, host=self.host)
 
     def get_flask_app(self) -> Flask:
         return self.app

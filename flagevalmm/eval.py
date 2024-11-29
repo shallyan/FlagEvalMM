@@ -248,7 +248,7 @@ class ServerWrapper:
                     )
                     if response.json()["status"] == 1:
                         break
-                    time.sleep(1)
+                    time.sleep(10)
                     logger.info("Waiting for eval to finish...")
                 self.evaluation_server.terminate()
                 self.evaluation_server.wait()
@@ -273,10 +273,7 @@ def evaluate_only(args):
             evaluator = EVALUATORS.build(task_cfg.evaluator)
             dataset = DATASETS.build(task_cfg.dataset)
             task_name = task_cfg.dataset.name
-            if args.output_dir:
-                output_dir = args.output_dir
-            else:
-                output_dir = osp.join(cfg["output_dir"], task_name)
+            output_dir = osp.join(cfg["output_dir"], task_name)
             evaluator.process(dataset, output_dir, model_name=cfg.get("model_name", ""))
         else:
             logger.error(f"No evaluator found in config {task_file}")

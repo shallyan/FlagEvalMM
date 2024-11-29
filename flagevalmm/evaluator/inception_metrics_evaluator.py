@@ -1,16 +1,37 @@
 import json
+from typing import Optional
 import os.path as osp
 import torch_fidelity
+from flagevalmm.dataset.utils import get_data_root
+from flagevalmm.common.const import FLAGEVALMM_DATASETS_CACHE_DIR
+
 from flagevalmm.registry import EVALUATORS
 
 
 @EVALUATORS.register_module()
 class InceptionMetricsEvaluator:
-    def __init__(self, metrics=["IS", "FID"], example_dir=None, **kwargs) -> None:
+    def __init__(
+        self,
+        metrics=["IS", "FID"],
+        example_dir: Optional[str] = None,
+        base_dir: Optional[str] = None,
+        config: Optional[dict] = None,
+        **kwargs,
+    ) -> None:
         self.metrics = metrics
+        if example_dir is None:
+            data_root = get_data_root(
+                data_root=None,
+                config=config,
+                cache_dir=FLAGEVALMM_DATASETS_CACHE_DIR,
+                base_dir=base_dir,
+            )
+            self.example_dir = osp.join(data_root, "image")
+        else:
+            self.example_dir = example_dir
+
         if "FID" in self.metrics:
-            assert example_dir is not None, "example_dir is required for FID"
-        self.example_dir = example_dir
+            assert osp.isdir(self.example_dir), "example_dir is required for FID"
 
     def get_metric_results(self, output_dir, **kwargs):
         results = {}

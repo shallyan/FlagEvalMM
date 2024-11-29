@@ -18,6 +18,7 @@ def parse_args():
     parser.add_argument("--output-dir", type=str, help="output dir")
     parser.add_argument("--checkpoint", type=str, help="checkpoint path")
     parser.add_argument("--port", type=int, default=5000, help="server port")
+    parser.add_argument("--host", type=str, default="127.0.0.1", help="server host")
     parser.add_argument("--quiet", action="store_true", help="quiet mode")
     args = parser.parse_args()
     return args
@@ -43,6 +44,7 @@ if __name__ == "__main__":
         output_dir=args.output_dir,
         model_path=args.checkpoint,
         port=args.port,
+        host=args.host,
         debug=args.debug,
         quiet=args.quiet,
     )

@@ -1,5 +1,7 @@
 # FlagEvalMM: A Flexible Framework for Comprehensive Multimodal Model Evaluation
 
+![FlagEvalMM Logo](assets/logo.png)
+
 ## Overview
 
 FlagEvalMM is an open-source evaluation framework designed to comprehensively assess multimodal models. It provides a standardized way to evaluate models that work with multiple modalities (text, images, video) across various tasks and metrics.
@@ -13,10 +15,49 @@ FlagEvalMM is an open-source evaluation framework designed to comprehensively as
 
 ## Installation
 
+### Basic Installation
+
 ```bash
 git clone https://github.com/flageval-baai/FlagEvalMM.git
 cd FlagEvalMM
 pip install -e .
+```
+
+### Optional Dependencies
+
+FlagEvalMM supports multiple backend engines for inference. Install the ones you plan to use:
+
+#### VLLM Backend
+
+```bash
+pip install vllm
+```
+
+#### SGLang Backend
+
+```bash
+pip install --upgrade pip
+pip install "sglang[all]"
+pip install flashinfer -i https://flashinfer.ai/whl/cu121/torch2.4/
+```
+
+For detailed installation instructions, please refer to the [official SGLang documentation](https://sgl-project.github.io/start/install.html).
+
+#### Transformers
+
+For optimal performance, we recommend installing flash-attention
+
+```bash
+pip install flash-attn --no-build-isolation
+```
+
+### About API keys
+
+If you want to evaluate some tasks by GPT (like charxiv, math_verse, etc.), you need to set the following environment variables:
+
+```bash
+export FLAGEVAL_API_KEY=$YOUR_OPENAI_API_KEY
+export FLAGEVAL_BASE_URL="https://api.openai.com/v1"
 ```
 
 ## Usage
@@ -105,11 +146,6 @@ flagevalmm --tasks tasks/mmmu/mmmu_val.py \
 
 `--use-cache` is optional, it will cache the model outputs, the same question with the same model setting will get results from cache.
 
-## About API keys
+## About Data
 
-If you want to evaluate some tasks by GPT (like charxiv, math_verse, etc.), you need to set the following environment variables:
-
-```bash
-export FLAGEVAL_API_KEY=$YOUR_OPENAI_API_KEY
-export FLAGEVAL_BASE_URL="https://api.openai.com/v1"
-```
+In the task configuration file, we download datasets from HuggingFace by default. If you need to use your own dataset, please set the `dataset_path` to your dataset path in the configuration file. FlagEvalMM will preprocess data from various sources, and the processed data will be stored in the `~/.cache/flagevalmm` directory by default. You can change the data storage path by modifying the `FLAGEVALMM_CACHE` environment variable.
