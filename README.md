@@ -29,8 +29,10 @@ FlagEvalMM supports multiple backend engines for inference. Install the ones you
 
 #### VLLM Backend
 
+Currently(November 30, 2024), we recommend using vllm==0.6.3.post1 and torch==2.4.0 for optimal inference performance and stability.
+
 ```bash
-pip install vllm
+pip install vllm==0.6.3.post1
 ```
 
 #### SGLang Backend
@@ -45,7 +47,7 @@ For detailed installation instructions, please refer to the [official SGLang doc
 
 #### Transformers
 
-For optimal performance, we recommend installing flash-attention
+For optimal performance for transformers, we recommend installing flash-attention
 
 ```bash
 pip install flash-attn --no-build-isolation
@@ -148,4 +150,19 @@ flagevalmm --tasks tasks/mmmu/mmmu_val.py \
 
 ## About Data
 
-In the task configuration file, we download datasets from HuggingFace by default. If you need to use your own dataset, please set the `dataset_path` to your dataset path in the configuration file. FlagEvalMM will preprocess data from various sources, and the processed data will be stored in the `~/.cache/flagevalmm` directory by default. You can change the data storage path by modifying the `FLAGEVALMM_CACHE` environment variable.
+In the task configuration file, we download datasets from HuggingFace by default. If you need to use your own dataset, please set the `dataset_path` to your dataset path in the configuration file.
+
+FlagEvalMM will preprocess data from various sources, and the processed data will be stored in the `~/.cache/flagevalmm` directory by default. You can change the data storage path by modifying the `FLAGEVALMM_CACHE` environment variable.
+
+## Citation
+
+```bibtex
+@misc{flagevalmm,
+    author = {Zheqi He, Yesheng Liu, Jingshu Zheng, Bowen Qin, Jinge Yao, Richen Xuan and Xi Yang},
+    title = {FlagEvalMM: A Flexible Framework for Comprehensive Multimodal Model Evaluation},
+    year = {2024},
+    publisher = {Zenodo},
+    version = {0.3.4},
+    url = {https://github.com/flageval-baai/FlagEvalMM}
+}
+```
