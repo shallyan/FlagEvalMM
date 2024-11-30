@@ -125,7 +125,7 @@ Example of evaluating models without vllm (using transformers instead):
 ```bash
 flagevalmm --tasks tasks/mmmu/mmmu_val.py \
         --exec model_zoo/vlm/llama-vision/model_adapter.py \
-        --model /share/project/huggingface/models/Meta-Llama-3.2-11B-Vision-Instruct \
+        --model meta-llama/Llama-3.2-11B-Vision-Instruct \
         --output-dir ./results/Meta-Llama-3.2-11B-Vision-Instruct
 ```
 

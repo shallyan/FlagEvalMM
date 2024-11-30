@@ -18,8 +18,7 @@ vqascore_evaluator = dict(
 
 one_align_evaluator = dict(
     type="OneAlignEvaluator",
-    model="/share/projset/models/t2i/one-align",
-    # model="q-future/one-align",
+    model="q-future/one-align",
     metrics=["quality", "aesthetics"],
 )
 
